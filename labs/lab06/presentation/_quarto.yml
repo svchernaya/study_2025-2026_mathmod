@@ -16,7 +16,9 @@ crossref:
 format:
   ### Pdf output format
   beamer:
-    pdf-engine: xelatex
+    pdf-engine: lualatex
+    mainfont: "IBM Plex Sans"
+    monofont: "IBM Plex Mono"
     toc: true
     toc-title: Содержание
     number-sections: true

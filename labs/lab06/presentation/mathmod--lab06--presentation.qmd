@@ -86,6 +86,7 @@ date-format: "YYYY-MM-DD" # Example: 2025-09-06
 ## Код для формата `pdf`
 
 ```yaml
+some: "Какой-то текст на русском языке"
 slide_level: 2
 aspectratio: 169
 section-titles: true
