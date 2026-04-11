@@ -28,11 +28,11 @@ format:
     navigation: horizontal
     csquotes: true
     indent: true
-    include-in-header:
-      - file: _resources/tex/beamer.tex
+    # include-in-header:
+    #  - file: _resources/tex/beamer.tex
     #### Language
-    babel-lang: russian
-    babel-otherlangs: english
+    # babel-lang: russian
+    # babel-otherlangs: english
   ### Html output
   revealjs:
     transition: slide

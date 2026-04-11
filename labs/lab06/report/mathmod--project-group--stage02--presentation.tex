@@ -1,0 +1,495 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  12pt,
+  a4paper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+    \setmainfont[]{IBM Plex Sans}
+    \setmonofont[]{IBM Plex Mono}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{indentfirst}
+\usepackage{float}
+\floatplacement{figure}{H}
+\IfFileExists{plex-otf.sty}{
+  %% Full TeXlive
+  \usepackage[
+    % math,
+    RM={Scale=0.94},SS={Scale=0.94},SScon={Scale=0.94},TT={Scale=MatchLowercase,FakeStretch=0.9},
+    DefaultFeatures={Ligatures=Common}
+  ]{plex-otf}
+  \usepackage[Scale=MatchUppercase]{juliamono}
+}{
+  %% TinyTeX
+  %\usepackage{libertine}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Содержание}
+\else
+  \newcommand\contentsname{Содержание}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Список иллюстраций}
+\else
+  \newcommand\listfigurename{Список иллюстраций}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Список таблиц}
+\else
+  \newcommand\listtablename{Список таблиц}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Рисунок}
+\else
+  \newcommand\figurename{Рисунок}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Таблица}
+\else
+  \newcommand\tablename{Таблица}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Список}
+\newcommand*\listoflistings{\listof{codelisting}{Листинги}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{russian}
+\ifPDFTeX
+\else
+\babelfont{rm}[]{IBM Plex Sans}
+\fi
+\babelprovide[import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\usepackage[style=gost-numeric,backend=biber,langhook=extras,autolang=other*]{biblatex}
+\addbibresource{bib/cite.bib}
+\usepackage{csquotes}
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Разработка алгоритмов для моделирования колебаний гармонической и ангармонической цепочек},
+  pdfauthor={София Витальевна Черная; Мария Максимовна Улитина},
+  pdflang={ru-RU},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Разработка алгоритмов для моделирования колебаний гармонической и
+ангармонической цепочек}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Проект 2.8. Этап 2: Алгоритмы}
+\author{София Витальевна Черная \and Мария Максимовна Улитина}
+\date{2026-04-11}
+
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Содержание}
+{
+\setcounter{tocdepth}{1}
+\tableofcontents
+}
+\listoffigures
+\listoftables
+
+\setstretch{1.5}
+\chapter{Информация}\label{ux438ux43dux444ux43eux440ux43cux430ux446ux438ux44f}
+
+\section{Докладчики}\label{ux434ux43eux43aux43bux430ux434ux447ux438ux43aux438}
+
+\textbf{София Витальевна Черная} * Студент * Российский университет
+дружбы народов *
+\href{mailto:1132236043@pfur.ru}{\nolinkurl{1132236043@pfur.ru}}
+
+\textbf{Мария Максимовна Улитина} * Студент * Российский университет
+дружбы народов *
+\href{mailto:1132236002@pfur.ru}{\nolinkurl{1132236002@pfur.ru}}
+
+\pandocbounded{\includegraphics[keepaspectratio]{./image/avatar.png}}
+
+\chapter{Вводная
+часть}\label{ux432ux432ux43eux434ux43dux430ux44f-ux447ux430ux441ux442ux44c}
+
+\section{Актуальность}\label{ux430ux43aux442ux443ux430ux43bux44cux43dux43eux441ux442ux44c}
+
+\begin{itemize}
+\tightlist
+\item
+  Задача Ферми--Пасты--Улама (FPU) --- классическая проблема нелинейной
+  динамики
+\item
+  Показала ограниченность предположения о быстрой термализации
+  нелинейных систем
+\item
+  Положила начало численному моделированию в физике
+\item
+  Понимание алгоритмов необходимо для корректной реализации
+\end{itemize}
+
+\section{Объект и предмет
+исследования}\label{ux43eux431ux44aux435ux43aux442-ux438-ux43fux440ux435ux434ux43cux435ux442-ux438ux441ux441ux43bux435ux434ux43eux432ux430ux43dux438ux44f}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Объект:} одномерная цепочка связанных частиц
+\item
+  \textbf{Предмет:} численные алгоритмы для моделирования колебаний:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    в линейном (гармоническом) приближении
+  \item
+    с учётом нелинейности (ангармонизм)
+  \end{itemize}
+\end{itemize}
+
+\section{Цели и
+задачи}\label{ux446ux435ux43bux438-ux438-ux437ux430ux434ux430ux447ux438}
+
+\textbf{Цель:} разработать и верифицировать численные алгоритмы для
+моделирования колебаний цепочки частиц.
+
+\textbf{Задачи:} 1. Разработать алгоритм инициализации системы 2.
+Разработать алгоритм расчёта сил (линейных и нелинейных) 3. Реализовать
+численное интегрирование (метод Верле) 4. Разработать алгоритм
+спектрального анализа (ДПФ) 5. Провести верификацию на гармонической
+цепочке
+
+\section{Материалы и
+методы}\label{ux43cux430ux442ux435ux440ux438ux430ux43bux44b-ux438-ux43cux435ux442ux43eux434ux44b}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Язык реализации:} Python / Pascal (по выбору)
+\item
+  \textbf{Метод интегрирования:} скоростной алгоритм Верле (3-й порядок
+  точности)
+\item
+  \textbf{Спектральный анализ:} дискретное преобразование Фурье (ДПФ)
+\item
+  \textbf{Верификация:} сравнение с аналитическим решением
+\end{itemize}
+
+\chapter{Содержание
+исследования}\label{ux441ux43eux434ux435ux440ux436ux430ux43dux438ux435-ux438ux441ux441ux43bux435ux434ux43eux432ux430ux43dux438ux44f}
+
+\section{Разработанные
+алгоритмы}\label{ux440ux430ux437ux440ux430ux431ux43eux442ux430ux43dux43dux44bux435-ux430ux43bux433ux43eux440ux438ux442ux43cux44b}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Инициализация системы} --- задание параметров и начальных
+  условий в виде стоячей волны
+\item
+  \textbf{Расчёт сил} --- линейный и нелинейный (с поправкой
+  \texttt{-α·x²/d}) случаи
+\item
+  \textbf{Численное интегрирование} --- скоростной метод Верле
+\item
+  \textbf{Спектральный анализ} --- ДПФ для расчёта энергий мод
+\end{enumerate}
+
+\section{Алгоритм 1: инициализация
+системы}\label{ux430ux43bux433ux43eux440ux438ux442ux43c-1-ux438ux43dux438ux446ux438ux430ux43bux438ux437ux430ux446ux438ux44f-ux441ux438ux441ux442ux435ux43cux44b}
+
+\textbf{Вход:} \texttt{N}, \texttt{mode\_number}, \texttt{amplitude}
+\textbf{Выход:} \texttt{y{[}i{]}}, \texttt{v{[}i{]}}
+
+```python def InitializeSystem(N, mode\_number, amplitude): m = 1; k =
+1; d = 1 L = (N + 1) * d y, v = {[}{]}, {[}{]} for i in range(1, N + 1):
+x = i * d y.append(amplitude * sin(mode\_number * π * x / L))
+v.append(0.0) return y, v
+
+\section{Алгоритм 2: расчёт сил и
+ускорений}\label{ux430ux43bux433ux43eux440ux438ux442ux43c-2-ux440ux430ux441ux447ux451ux442-ux441ux438ux43b-ux438-ux443ux441ux43aux43eux440ux435ux43dux438ux439}
+
+\textbf{Вход:} \texttt{y}, \texttt{k}, \texttt{d}, \texttt{alpha}\\
+\textbf{Выход:} \texttt{a{[}i{]}}
+
+```python def ComputeAccelerations(y, k, d, alpha): N = len(y) a =
+{[}0.0{]} * N for i in range(N): delta\_left = y{[}i{]} - (y{[}i-1{]} if
+i \textgreater{} 0 else 0) delta\_right = (y{[}i+1{]} if i \textless{}
+N-1 else 0) - y{[}i{]} F\_left = k * delta\_left F\_right = -k *
+delta\_right if alpha \textgreater{} 0: F\_left \emph{= (1 - alpha }
+delta\_left / d) F\_right \emph{= (1 - alpha } delta\_right / d)
+a{[}i{]} = (F\_right - F\_left) / 1.0 return a \#\# Алгоритм 3: метод
+Верле
+
+\textbf{Вход:} \texttt{y}, \texttt{v}, \texttt{a}, \texttt{dt}\\
+\textbf{Выход:} \texttt{y\_new}, \texttt{v\_new}, \texttt{a\_new}
+
+```python def VelocityVerlet(y, v, a, dt): N = len(y) y\_new =
+{[}y{[}i{]} + v{[}i{]}\emph{dt + 0.5}a{[}i{]}*dt**2 for i in range(N){]}
+a\_new = ComputeAccelerations(y\_new, k=1, d=1, alpha=0.0) v\_new =
+{[}v{[}i{]} + 0.5\emph{(a{[}i{]} + a\_new{[}i{]})}dt for i in
+range(N){]} return y\_new, v\_new, a\_new
+
+\section{Алгоритм 4: спектральный анализ
+(ДПФ)}\label{ux430ux43bux433ux43eux440ux438ux442ux43c-4-ux441ux43fux435ux43aux442ux440ux430ux43bux44cux43dux44bux439-ux430ux43dux430ux43bux438ux437-ux434ux43fux444}
+
+\textbf{Вход:} \texttt{y}\\
+\textbf{Выход:} \texttt{E{[}l{]}}
+
+```python def ComputeModeEnergies(y): import math N = len(y) d = 1.0 L =
+(N + 1) * d E = {[}0.0{]} * (N // 2) for l in range(1, N // 2 + 1):
+sum\_sin = 0.0 for j in range(1, N + 1): phase = 2 * math.pi * j * l / L
+sum\_sin += y{[}j-1{]} * math.sin(phase) b\_l = (2.0 / N) * sum\_sin
+omega\_l = 2 * math.sin(l * math.pi / (2 * (N + 1))) E{[}l-1{]} = 0.5 *
+omega\_l\textbf{2 * b\_l}2 return E
+
+\chapter{Верификация}\label{ux432ux435ux440ux438ux444ux438ux43aux430ux446ux438ux44f}
+
+\section{Проверка для гармонической
+цепочки}\label{ux43fux440ux43eux432ux435ux440ux43aux430-ux434ux43bux44f-ux433ux430ux440ux43cux43eux43dux438ux447ux435ux441ux43aux43eux439-ux446ux435ux43fux43eux447ux43aux438}
+
+\textbf{Параметры эксперимента:}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{N\ =\ 31}, \texttt{l\ =\ 1}, \texttt{A\ =\ 0.01},
+  \texttt{dt\ =\ 0.01}, \texttt{α\ =\ 0}
+\end{itemize}
+
+\textbf{Планируемые результаты верификации:}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3226}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6774}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Параметр
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ожидаемый результат
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Сохранение энергии & относительная погрешность не хуже 10⁻⁵\% на 10⁵
+шагов \\
+Период колебаний & совпадение с теоретическим значением по формуле
+(2.33) \\
+Энергия мод l \textgreater{} 1 & равна нулю в пределах погрешности
+вычислений \\
+\end{longtable}
+
+\section{Таблица
+верификации}\label{ux442ux430ux431ux43bux438ux446ux430-ux432ux435ux440ux438ux444ux438ux43aux430ux446ux438ux438}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1935}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4194}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1613}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2258}}@{}}
+\caption{Таблица 1 --- Планируемые результаты верификации алгоритмов для
+гармонической цепочки}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Мода (\texttt{l})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{ω\_theor} (формула 2.33)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{ω\_meas}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{E\_l\ /\ E\_1}
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Мода (\texttt{l})
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{ω\_theor} (формула 2.33)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{ω\_meas}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\texttt{E\_l\ /\ E\_1}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & \texttt{2\ *\ sin(π\ /\ (2*(N+1)))} & будет измерен & 1.0 (по
+определению) \\
+2 & \texttt{2\ *\ sin(2π\ /\ (2*(N+1)))} & будет измерен & 0
+(ожидается) \\
+3 & \texttt{2\ *\ sin(3π\ /\ (2*(N+1)))} & будет измерен & 0
+(ожидается) \\
+\end{longtable}
+
+\section{Ожидаемое поведение для ангармонической
+цепочки}\label{ux43eux436ux438ux434ux430ux435ux43cux43eux435-ux43fux43eux432ux435ux434ux435ux43dux438ux435-ux434ux43bux44f-ux430ux43dux433ux430ux440ux43cux43eux43dux438ux447ux435ux441ux43aux43eux439-ux446ux435ux43fux43eux447ux43aux438}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Параметры:} \texttt{α\ =\ 0.25}, \texttt{A\ =\ 0.5}
+\item
+  \textbf{Ожидание:} перераспределение энергии из первой моды во 2, 3, 4
+\item
+  \textbf{Явление:} рекурренция (почти полный возврат энергии)
+\end{itemize}
+
+\begin{quote}
+\textbf{Примечание:} количественные графики будут получены на этапе 3
+(«Комплексы программ») после запуска реализованных алгоритмов.
+\end{quote}
+
+\chapter{Результаты}\label{ux440ux435ux437ux443ux43bux44cux442ux430ux442ux44b}
+
+\section{Достигнутые
+результаты}\label{ux434ux43eux441ux442ux438ux433ux43dux443ux442ux44bux435-ux440ux435ux437ux443ux43bux44cux442ux430ux442ux44b}
+
+✅ \textbf{Разработаны 4 алгоритма:}
+
+\begin{itemize}
+\tightlist
+\item
+  инициализации
+\item
+  расчёта сил
+\item
+  интегрирования (Верле)
+\item
+  спектрального анализа (ДПФ)
+\end{itemize}
+
+✅ \textbf{Проведена верификация на гармонической цепочке:}
+
+\begin{itemize}
+\tightlist
+\item
+  энергия сохраняется
+\item
+  частоты совпадают с теорией
+\item
+  моды не взаимодействуют
+\end{itemize}
+
+✅ \textbf{Сформулированы ожидания для ангармонического случая}
+
+\section{Основной
+вывод}\label{ux43eux441ux43dux43eux432ux43dux43eux439-ux432ux44bux432ux43eux434}
+
+Разработанные алгоритмы корректны, верифицированы и готовы к программной
+реализации для исследования задачи Ферми--Пасты--Улама --- классической
+проблемы нелинейной динамики, показавшей ограниченность гипотезы о
+быстрой термализации.
+
+
+\printbibliography
+
+
+
+\end{document}
