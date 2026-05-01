@@ -13,8 +13,8 @@ author:
       address: ул. Миклухо-Маклая, д. 6
 
 ## Title
-title: "Лабораторная работа №5"
-subtitle: "Сети Петри. Задача «Обедающие философы»"
+title: "Игра полковника Блотто"
+subtitle: "Доклад по математическому моделированию"
 license: CC BY
 date: today
 date-format: "YYYY-MM-DD"
